@@ -56,6 +56,10 @@
     const correctIndex = buttons.length ? Number(buttons[0].dataset.correct) : null;
     const reactionDiv = document.getElementById('reaction');
 
+    const videoCorrect = "{{ $question?->video_correct ? asset('storage/' . $question->video_correct) : '' }}";
+    const videoWrong   = "{{ $question?->video_wrong ? asset('storage/' . $question->video_wrong) : '' }}";
+    const questionId   = {{ $question?->id ?? 'null' }};
+
     buttons.forEach(btn => {
         btn.addEventListener('click', () => {
             buttons.forEach((b, i) => {
@@ -70,25 +74,26 @@
             });
 
             const correct = Number(btn.dataset.index) === correctIndex;
-            const videoPath = correct
-                ? "{{ asset('storage/' . $question->video_correct) }}"
-                : "{{ asset('storage/' . $question->video_wrong) }}";
+            const videoPath = correct ? videoCorrect : videoWrong;
 
-            reactionDiv.innerHTML = `<video src="${videoPath}" class="w-full rounded mt-4" controls autoplay></video>`;
-            reactionDiv.classList.remove('hidden');
+            if (videoPath) {
+                reactionDiv.innerHTML = `<video src="${videoPath}" class="w-full rounded mt-4" controls autoplay></video>`;
+                reactionDiv.classList.remove('hidden');
+            }
 
-            // إرسال النتيجة إلى السيرفر
-            fetch("{{ route('student.record') }}", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                },
-                body: JSON.stringify({
-                    question_id: {{ $question->id }},
-                    is_correct: correct
-                })
-            });
+            if (questionId) {
+                fetch("{{ route('student.record') }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    body: JSON.stringify({
+                        question_id: questionId,
+                        is_correct: correct
+                    })
+                });
+            }
         });
     });
 
