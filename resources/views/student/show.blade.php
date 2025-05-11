@@ -69,11 +69,11 @@
                 b.classList.remove('bg-gray-200', 'bg-green-500', 'bg-red-500', 'text-white');
 
                 if (i === correctIndex) {
-                    b.classList.add('bg-green-500', 'text-white'); // الزر الصحيح
+                    b.classList.add('bg-green-500', 'text-white'); // الصح
                 }
 
                 if (i === selectedIndex && !correct) {
-                    b.classList.add('bg-red-500', 'text-white'); // الزر الخاطئ
+                    b.classList.add('bg-red-500', 'text-white'); // الخطأ
                 }
 
                 b.disabled = true;
@@ -111,7 +111,7 @@
         questionText.textContent = isEnglish ? questionText.dataset.en : questionText.dataset.ar;
 
         buttons.forEach(btn => {
-            btn.textContent = isEnglish ? btn.dataset.en : btn.dataset.ar;
+            btn.innerHTML = isEnglish ? btn.dataset.en : btn.dataset.ar;
         });
     });
 </script>
