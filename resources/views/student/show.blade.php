@@ -77,7 +77,7 @@
             const videoPath = correct ? videoCorrect : videoWrong;
 
             if (videoPath) {
-                reactionDiv.innerHTML = `<video src="${videoPath}" class="w-full rounded mt-4" controls autoplay></video>`;
+                reactionDiv.innerHTML = `<video src="${videoPath}" class="w-full h-[240px] rounded mt-4" controls autoplay></video>`;
                 reactionDiv.classList.remove('hidden');
             }
 
