@@ -62,20 +62,24 @@
 
     buttons.forEach(btn => {
         btn.addEventListener('click', () => {
+            const selectedIndex = Number(btn.dataset.index);
+            const correct = selectedIndex === correctIndex;
+
             buttons.forEach((b, i) => {
-                b.classList.remove('bg-gray-200', 'bg-green-500', 'bg-red-500');
+                b.classList.remove('bg-gray-200', 'bg-green-500', 'bg-red-500', 'text-white');
+
                 if (i === correctIndex) {
-                    b.classList.add('bg-green-500', 'text-white');
+                    b.classList.add('bg-green-500', 'text-white'); // الزر الصحيح
                 }
-                if (i == btn.dataset.index && i != correctIndex) {
-                    b.classList.add('bg-red-500', 'text-white');
+
+                if (i === selectedIndex && !correct) {
+                    b.classList.add('bg-red-500', 'text-white'); // الزر الخاطئ
                 }
+
                 b.disabled = true;
             });
 
-            const correct = Number(btn.dataset.index) === correctIndex;
             const videoPath = correct ? videoCorrect : videoWrong;
-
             if (videoPath) {
                 reactionDiv.innerHTML = `<video src="${videoPath}" class="w-full h-[240px] rounded mt-4" controls autoplay></video>`;
                 reactionDiv.classList.remove('hidden');
