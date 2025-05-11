@@ -25,4 +25,26 @@ class StudentController extends Controller
 
         return response()->json(['message' => 'تم الحفظ']);
     }
+
+    public function next($id)
+    {
+        $nextQuestion = Question::where('id', '>', $id)->orderBy('id')->first();
+
+        if ($nextQuestion) {
+            return view('student.show', ['question' => $nextQuestion]);
+        }
+
+        return redirect()->back()->with('message', 'لا يوجد سؤال بعد هذا');
+    }
+
+    public function prev($id)
+    {
+        $prevQuestion = Question::where('id', '<', $id)->orderBy('id', 'desc')->first();
+
+        if ($prevQuestion) {
+            return view('student.show', ['question' => $prevQuestion]);
+        }
+
+        return redirect()->back()->with('message', 'لا يوجد سؤال قبل هذا');
+    }
 }

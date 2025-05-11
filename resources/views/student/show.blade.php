@@ -43,6 +43,19 @@
 
         {{-- الفيديو --}}
         <div id="reaction" class="mt-6 hidden"></div>
+
+        {{-- أزرار التنقل --}}
+        <div class="mt-6 flex justify-between">
+            <a href="{{ route('student.prevQuestion', ['id' => $question->id]) }}"
+               class="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded">
+                ← السابق
+            </a>
+
+            <a href="{{ route('student.nextQuestion', ['id' => $question->id]) }}"
+               class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                التالي →
+            </a>
+        </div>
     </div>
 @else
     <div class="bg-white rounded-xl shadow-lg w-full max-w-md mx-auto p-6 text-center">
